@@ -1,6 +1,7 @@
 import {
   Component,
   computed,
+  inject,
   input
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -21,13 +22,13 @@ export class SnackListComponent {
     transform: (value:string) => value.toLowerCase()
   });
 
-  constructor(private snackService: SnackService) {}
+  snackService = inject(SnackService);
 
   snacks = this.snackService.getSnacks();
 
-  filteredSnacks = computed(() =>{
+  filteredSnacks = computed(() =>
     this.snacks.filter(s => s.name.includes(this.filterByOption()) )
-  });
+  );
 
   
 
