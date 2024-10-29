@@ -8,13 +8,15 @@
       </tr>
     </thead>
     <tbody>
-      @for( snack of filteredSnacks;track $index){
+
+  
+      @for (snackItem of filteredSnacks(); track $index) {
       <tr>
         <th scope="row">{{ $index }}</th>
-        <td>{{ snack.name }}</td>
-        <td>{{ snack.price | currency : 'USD' }}</td>
+        <td>{{ snackItem.name }}</td>
+        <td>{{ snackItem.price | currency : 'USD' }}</td>
       </tr>
-      }
+      }@empty { No snacks available that match the filter }
     </tbody>
   </table>
 </div>

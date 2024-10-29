@@ -1,13 +1,10 @@
 import {
   Component,
   computed,
-  Input,
-  OnChanges,
-  SimpleChanges,
+  input
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SnackService } from '../snack.service';
-import { Snack } from '../snack/snack.model';
 import { CurrencyPipe } from '@angular/common';
 
 @Component({
@@ -17,19 +14,22 @@ import { CurrencyPipe } from '@angular/common';
   templateUrl: './snack-list.component.html',
   styleUrl: './snack-list.component.css',
 })
-export class SnackListComponent implements OnChanges {
-  @Input() filterBy = '';
-  filteredSnacks: Snack[] = [];
+export class SnackListComponent {
 
-  snacks = this.snackService.getSnacks();
+  filterByOption = input.required({
+    alias:'filterBy',
+    transform: (value:string) => value.toLowerCase()
+  });
 
   constructor(private snackService: SnackService) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.filteredSnacks = this.snacks.filter((s) =>
-      s.name.includes(this.filterBy)
-    );
-  }
+  snacks = this.snackService.getSnacks();
+
+  filteredSnacks = computed(() =>{
+    this.snacks.filter(s => s.name.includes(this.filterByOption()) )
+  });
+
+  
 
   // filteredSnacks = computed(() =>
   //   this.snacks.filter((s) => s.name.includes(this.filterBy))
