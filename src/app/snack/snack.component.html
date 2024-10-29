@@ -1,0 +1,12 @@
+<h2 class="border-bottom pb-2">Snacks</h2>
+<div class="pt-2">
+  <label class="fs-4 fw-bold me-2">Filter By:</label>
+
+  <input
+    class="mb-4 form-control"
+    [(ngModel)]="filterCriteria"
+    type="text"
+    aria-label="filter by"
+  />
+</div>
+<app-snack-list [filterBy]="filterCriteria"></app-snack-list>
